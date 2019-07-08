@@ -1,0 +1,108 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: staticweb
+  namespace: mongodb
+  labels:
+    component: staticwebcomponent
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: staticwebcomponent   
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        component: staticwebcomponent  
+    spec:     # pod spec               
+      containers: 
+      - name: node-web-app 
+        image: theburi/node-web-app # image we pushed
+        ports:
+        - containerPort: 8080
+
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: cart
+  namespace: mongodb
+  labels:
+    component: cart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: cart   
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        component: cart  
+    spec:     # pod spec               
+      containers: 
+      - name:  cartservice
+        image: theburi/cartservice # image we pushed
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+# MongoDB
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: my-replicaset
+  namespace: mongodb
+spec:
+  type: ReplicaSet
+
+  members: 3
+  version: 4.0.9
+
+  project: my-project-demo
+  credentials: my-credentials
+
+  # Security enable Stage 2
+  security:
+    tls:
+      enabled: true
+      
+
+  # look into `replica-set-persistent-volumes.yaml` for an example on how to use
+  # Kubernetes Persistent Volumes in your MDB deployment.
+  persistent: true
+
+
+
+# Services definition
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: staticwebservice
+  labels:
+    component: staticwebcomponent
+  namespace: mongodb
+spec:
+  selector:
+    component: staticwebcomponent
+  ports:
+  - name: http
+    targetPort: 8080
+    port: 80
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart-service
+  labels:
+    component: cart
+  namespace: mongodb
+spec:
+  selector:
+    component: cart
+  ports:
+  - name: http
+    targetPort: 8080
+    port: 80

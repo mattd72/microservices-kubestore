@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-project-demo
+  namespace: mongodb
+data:
+  projectName: World_demo
+  baseUrl: http://ec2-54-88-70-89.compute-1.amazonaws.com:9080
+
+  # Optional parameters
+
+  # If orgId is omitted a new organization will be created, with the same name as the Project.
+  # orgId: 5d022302553855a152e13177
+  authenticationMode: x509
+  credentials: my-credentials
+
