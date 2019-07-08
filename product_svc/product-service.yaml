@@ -1,0 +1,42 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: product-svc
+  labels:
+    component: product-svc
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      component: product-svc   
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        component: product-svc  
+    spec:     # pod spec               
+      containers: 
+      - name: product-svc
+        image: docker.com/theburi/product-svc # image we pushed
+        ports:
+        - containerPort: 80
+        env:
+          - name: PRODUCT_SERVICE_DB
+            valueFrom:
+              secretKeyRef:
+               name: product-service-db
+               key: dburi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-svc
+  labels:
+    component: product-svc
+spec:
+  selector:
+    component: product-svc
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+

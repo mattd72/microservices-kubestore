@@ -1,0 +1,6 @@
+flask
+flask-httpauth
+pymongo[tls]
+dnspython
+kubernetes
+
