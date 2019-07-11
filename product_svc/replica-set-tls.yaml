@@ -2,12 +2,12 @@
 apiVersion: mongodb.com/v1
 kind: MongoDB
 metadata:
-  name: product-service-mdb
+  name: product-service-2-mdb
 spec:
   type: ReplicaSet
 
   members: 3
-  version: 4.0.9
+  version: 4.0.10
 
   project: configmap-opsmanager
   credentials: secret-opsmanager-credentials
@@ -16,16 +16,12 @@ spec:
   # Kubernetes Persistent Volumes in your MDB deployment.
   persistent: true
 
-  # This will create a TLS enabled Replica Set, which means that all the traffic
-  # between members of the Replica Set and clients, will be encrypted using TLS
-  # certificates. These certificates will be generated on the fly by the operator
-  # using the Kubernetes CA.
-  # Please refer to Kubernetes TLS Documentation on how to approve these certs:
-  #
-  # https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
   #
   security:
     tls:
       enabled: true
+    
+    clusterAuthenticationMode: x509
+    
 
 

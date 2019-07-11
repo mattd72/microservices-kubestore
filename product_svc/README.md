@@ -33,5 +33,10 @@ $kubectl run -it mongo:rc mongoimport --host <HOST> -d products -c reviews
 $git clone https://github.com/jasonmimick/products-service
 $cd products-service
 $kubectl create secret PRODUCTS_SERVICE_MONGODB_URI "mongodb+srv://products-db-src.cluster.local"
+
+$kubectl create secret generic product-service-import-host --from-literal="MONGODB_URI=mongodb+srv://product-service-mdb.cluster.local"
 $kubectl apply -f kubernetes/products-service.yaml
+
+Create file with base64 encoded secrete 
+$cat user/product-service-user-full.pem  | base64 | pbcopy
 

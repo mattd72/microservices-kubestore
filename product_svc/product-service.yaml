@@ -16,7 +16,7 @@ spec:
     spec:     # pod spec               
       containers: 
       - name: product-svc
-        image: docker.com/theburi/product-svc # image we pushed
+        image: theburi/product-svc # image we pushed
         ports:
         - containerPort: 80
         env:
@@ -25,6 +25,14 @@ spec:
               secretKeyRef:
                name: product-service-db
                key: dburi
+        VolumeMounts:
+          - mountPath: "/cert"
+            name: mdbuser-pem
+            readOnly: true
+      volumes:
+        - name: mdbuser-pem
+          secret:
+            secretName: product-svc-mdbuser-pem
 ---
 apiVersion: v1
 kind: Service

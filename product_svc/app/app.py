@@ -36,7 +36,13 @@ except Exception as err:
 
 dburi = os.environ.get('PRODUCT_SERVICE_DB')
 logger.debug( f'Read environment PRODUCT_SERVICE_DB: {dburi}' )
-mongo = MongoClient(dburi,ssl_cert_reqs=ssl.CERT_NONE)  
+client = MongoClient(dburi,
+                     authMechanism="MONGODB-X509",
+                     ssl=True,
+                     ssl_certfile='/cert/pem',
+                     ssl_cert_reqs=ssl.CERT_REQUIRED,
+                     ssl_ca_certs='/var/run/secrets/kubernetes.io/serviceaccount/ca.crt')
+
 DEFAULT_DB = 'products'
 DEFAULT_COLL = 'reviews'
 CURRENT_DB = DEFAULT_DB
@@ -44,14 +50,7 @@ CURRENT_COLL = DEFAULT_COLL
 logger.warning(f'initialize/CURRENT_DB:{CURRENT_DB} CURRENT_COLL:{CURRENT_COLL}')
 logger.info(f'mongo.server_info():{mongo.server_info()}')
 
-#client = MongoClient('example.com',
-#                      username="<X.509 derived username>"
-#                      authMechanism="MONGODB-X509",
-#                      ssl=True,
-#                      ssl_certfile='/path/to/client.pem',
-#                      ssl_cert_reqs=ssl.CERT_REQUIRED,
-#                      ssl_ca_certs='/path/to/ca.pem')
-                                 
+                               
 @auth.verify_password
 def verify_password(username, password):
   potential_key = { '_id' : '{}:{}'.format(username,password) }

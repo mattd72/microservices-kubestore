@@ -1,4 +1,4 @@
-REPO=docker.com/theburi
+REPO=docker.io/theburi
 APP=product-svc
 IMAGE="${REPO}/${APP}"
 docker build -t ${IMAGE} .

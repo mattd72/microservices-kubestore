@@ -1,0 +1,16 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDBUser
+metadata:
+  name: product-service-user
+spec:
+  username: CN=product-service-user,OU=kubestore,O=cloud,L=New York,ST=New York,C=US
+  project: configmap-opsmanager
+  db: "$external"
+  roles:
+    - db: admin
+      name: readWriteAnyDatabase
+    - db: admin
+      name: clusterAdmin
+    - db: admin
+      name: dbAdminAnyDatabase

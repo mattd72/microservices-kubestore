@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: configmap-opsmanager
 data:
-  projectName: KubeStore
+  projectName: KubeStoreDemo
   baseUrl: http://ec2-54-88-70-89.compute-1.amazonaws.com:9080
 
   authenticationMode: x509
