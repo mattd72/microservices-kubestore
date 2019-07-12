@@ -60,20 +60,8 @@ EOF
     cat ${client}.crt ${client}-key.pem > ${client}-full.pem
 }
 
-copy_into_pods() {
-    file="${1}"
-    members=$(kubectl -n ${NAMESPACE} get mdb/${MDB} -o jsonpath='{.spec.members}')
-    members=$((members-1))
-
-    for i in $(seq $members -1 0); do
-        
-        echo "kubectl cp $file \"${NAMESPACE}/${MDB}-$i:/mongodb-automation/\""
-        kubectl cp $file "${NAMESPACE}/${MDB}-$i:/mongodb-automation/"
-    done
-}
 
 clients="product-service-user"
 for cert in $clients; do
     generate_cert_for_client "${cert}"
-    # copy_into_pods "${cert}-full.pem"
 done

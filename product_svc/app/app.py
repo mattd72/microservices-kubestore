@@ -3,6 +3,7 @@ import sys
 import logging
 import uuid
 import ssl 
+import dns
 from flask import Flask
 from flask import request
 from pymongo import MongoClient
@@ -10,6 +11,11 @@ from bson.json_util import loads
 from bson.json_util import dumps, RELAXED_JSON_OPTIONS
 #from kubernetes import client, config, watch
 from flask_httpauth import HTTPBasicAuth
+
+
+# from dns import resolver
+# for result in resolver.query('_mongodb._tcp.product-service-2-mdb-svc.mongodb.svc.cluster.local', 'TXT'):
+#   print(result.target.to_text())
 
 logger = logging.getLogger('products-microservice')
 log_level = os.environ.get('PRODUCT_MICROSERVICE_LOG_LEVEL','DEBUG')
@@ -34,11 +40,14 @@ try:
 except Exception as err:
   logger.error(err)
 
-dburi = os.environ.get('PRODUCT_SERVICE_DB')
-logger.debug( f'Read environment PRODUCT_SERVICE_DB: {dburi}' )
-client = MongoClient(dburi,
+dburi = os.environ.get('MONGODB_URI')
+logger.debug( f'Read environment MONGODB_URI: {dburi}' )
+# mongo = MongoClient('mongodb+srv://product-service-2-mdb-svc.mongodb.svc.cluster.local/products',
+mongo = MongoClient('product-service-2-mdb-0.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017,product-service-2-mdb-1.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017,product-service-2-mdb-2.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017',
                      authMechanism="MONGODB-X509",
                      ssl=True,
+                     replicaSet='product-service-2-mdb',
+                     authSource='$external',
                      ssl_certfile='/cert/pem',
                      ssl_cert_reqs=ssl.CERT_REQUIRED,
                      ssl_ca_certs='/var/run/secrets/kubernetes.io/serviceaccount/ca.crt')

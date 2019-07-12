@@ -3,6 +3,6 @@ COPY ./product-reviews.csv /
 ENV TARGET_DB products
 ENV TARGET_COLL reviews
 ENV IMPORT_FILE /product-reviews.csv
-ENV MONGODB_URI mongodb+srv://product-service-2-mdb-svc.mongodb.svc.cluster.local
-CMD mongoimport --uri "${MONGODB_URI}/${TARGET_DB}?replicaSet=product-service-2-mdb&ssl=true&authMechanism=MONGODB-X509&authSource=\$external" --collection ${TARGET_COLL} --type csv --file "${IMPORT_FILE}" -v --sslPEMKeyFile "/cert/pem" --sslCAFile "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt" --headerline --mode upsert
+#ENV MONGODB_URI mongodb+srv://product-service-2-mdb-svc.mongodb.svc.cluster.local
+CMD mongoimport --uri "${MONGODB_URI}/${TARGET_DB}?replicaSet=product-service-2-mdb&ssl=true&authMechanism=MONGODB-X509&authSource=\$external" --collection ${TARGET_COLL} --type csv --file "${IMPORT_FILE}" -v --sslPEMKeyFile "/cert/pem" --sslCAFile "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt" --headerline --mode upsert --drop
 

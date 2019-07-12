@@ -1,5 +1,5 @@
 REPO=docker.io/theburi
-APP=product-svc
+APP=product-service
 IMAGE="${REPO}/${APP}"
 docker build -t ${IMAGE} .
 docker push ${IMAGE}

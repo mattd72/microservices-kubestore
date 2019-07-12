@@ -16,16 +16,16 @@ spec:
     spec:     # pod spec               
       containers: 
       - name: product-svc
-        image: theburi/product-svc # image we pushed
+        image: theburi/product-service # image we pushed
         ports:
-        - containerPort: 80
+        - containerPort: 5274
         env:
-          - name: PRODUCT_SERVICE_DB
+          - name: MONGODB_URI
             valueFrom:
               secretKeyRef:
-               name: product-service-db
-               key: dburi
-        VolumeMounts:
+                name: product-svc-mdbuser-pem
+                key: uri
+        volumeMounts:
           - mountPath: "/cert"
             name: mdbuser-pem
             readOnly: true
@@ -45,6 +45,6 @@ spec:
     component: product-svc
   ports:
   - name: http
-    targetPort: 80
+    targetPort: 5274
     port: 80
 
