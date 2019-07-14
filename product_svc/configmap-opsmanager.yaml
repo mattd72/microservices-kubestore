@@ -5,7 +5,8 @@ metadata:
   name: configmap-opsmanager
 data:
   projectName: KubeStoreDemo
-  baseUrl: http://ec2-54-88-70-89.compute-1.amazonaws.com:9080
+  orgId: 5d298c35c56c98d5cc3cd303
+  baseUrl: https://cloud.mongodb.com
 
   authenticationMode: x509
   credentials: secret-opsmanager-credentials

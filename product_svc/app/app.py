@@ -121,6 +121,7 @@ def get():
   """
   set_current_collection() 
   query = request.args
+  find_q = {}
  
   if query:
     if 'filter' in query:
@@ -128,12 +129,16 @@ def get():
     if 'all' in query:
       query = {}
     if 'brand' in query:
-      values = query['brand'].split(',')
-      q = { "brand" : { "$in" : query['brand'].split(',') } }
-      logger.info(f'rewrote \'brand\' query {q}')
-      query = q
+      find_q['brand'] = { "$in" : query['brand'].split(',') } 
+      logger.info(f'rewrote \'brand\' query {find_q}')
+    if 'categories' in query:
+      find_q['categories'] = {}
+      for value in query['categories'].split(','):
+        find_q['categories']['$regex'] = value
+      # find_q ["$and"] = q
+      logger.info(f'rewrote \'categories\' query {find_q}')
     logger.info(f'get: {query}')
-    return (dumps(list(mongo[CURRENT_DB][CURRENT_COLL].find(query).limit(100))),200)
+    return (dumps(list(mongo[CURRENT_DB][CURRENT_COLL].find(find_q).limit(100))),200)
   else:
     logger.info(f'HELLO product-service')
     return (f'HELLO product-service',200)
