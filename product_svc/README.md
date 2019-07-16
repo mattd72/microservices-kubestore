@@ -37,6 +37,15 @@ $kubectl create secret PRODUCTS_SERVICE_MONGODB_URI "mongodb+srv://products-db-s
 $kubectl create secret generic product-service-import-host --from-literal="MONGODB_URI=mongodb+srv://product-service-mdb.cluster.local"
 $kubectl apply -f kubernetes/products-service.yaml
 
+Kuberenetes x509 CSR  https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
+
+Get User name from x509
+openssl x509 -noout -subject -in <file.pem>
+
 Create file with base64 encoded secrete 
 $cat user/product-service-user-full.pem  | base64 | pbcopy
+
+Add uri mongodb+srv://product-service-2-mdb-svc.mongodb.svc.cluster.local
+
+
 

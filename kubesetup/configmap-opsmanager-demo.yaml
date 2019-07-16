@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-opsmanager-demo
+data:
+  projectName: DemoProject
+  orgId: 5d298c35c56c98d5cc3cd303
+  baseUrl: https://cloud.mongodb.com
+
+  # authenticationMode: x509
+  # credentials: secret-opsmanager-credentials
+
+  # kubectl  create secret generic secret-opsmanager-credentials --from-literal="user=myessaac" --from-literal="publicApiKey=4c8fba6f-bde3-4ca7-8cad-519c894e8824"
+
