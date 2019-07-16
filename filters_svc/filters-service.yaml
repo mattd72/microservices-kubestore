@@ -1,0 +1,50 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: filters-svc
+  labels:
+    component: filters-svc
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      component: filters-svc   
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        component: filters-svc  
+    spec:     # pod spec               
+      containers: 
+      - name: filters-svc
+        image: theburi/filters-service # image we pushed
+        ports:
+        - containerPort: 5274
+        env:
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: product-svc-mdbuser-pem
+                key: uri
+        volumeMounts:
+          - mountPath: "/cert"
+            name: mdbuser-pem
+            readOnly: true
+      volumes:
+        - name: mdbuser-pem
+          secret:
+            secretName: product-svc-mdbuser-pem
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filters-svc
+  labels:
+    component: filters-svc
+spec:
+  selector:
+    component: filters-svc
+  ports:
+  - name: http
+    targetPort: 5274
+    port: 80
+

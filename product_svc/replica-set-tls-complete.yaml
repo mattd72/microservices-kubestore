@@ -15,21 +15,21 @@ spec:
   # look into `replica-set-persistent-volumes.yaml` for an example on how to use
   # Kubernetes Persistent Volumes in your MDB deployment.
   persistent: true
-  podSpec:
-    persistence:
-      multiple:
-        data:          
-          storage: 10Gi        
-        journal:          
-          storage: 1Gi               
-        logs:        
-          storage: 500M
+  # podSpec:
+  #   persistence:
+  #     multiple:
+  #       data:          
+  #         storage: 10Gi        
+  #       journal:          
+  #         storage: 1Gi               
+  #       logs:        
+  #         storage: 500M
   #
   security:
     tls:
       enabled: true
     
-    # clusterAuthenticationMode: x509
+    clusterAuthenticationMode: x509
   
 
 

@@ -24,3 +24,7 @@ spec:
         backend:
           serviceName: product-svc
           servicePort: 80
+      - path: /api/filters(.*)
+        backend:
+          serviceName: filters-svc
+          servicePort: 80
