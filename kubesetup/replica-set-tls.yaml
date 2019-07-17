@@ -12,6 +12,9 @@ spec:
   project: configmap-opsmanager-demo
   credentials: secret-opsmanager-credentials
 
+  podSpec:
+    memory: 512M
+
   # look into `replica-set-persistent-volumes.yaml` for an example on how to use
   # Kubernetes Persistent Volumes in your MDB deployment.
   persistent: true

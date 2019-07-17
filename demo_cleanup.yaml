@@ -1,0 +1,6 @@
+kubectl delete -f product_svc/user/mongodbuser-products.yaml 
+kubectl delete -f filters_svc/filters-service.yaml  
+kubectl delete -f product_svc/product-service.yaml 
+kubectl delete -f product_svc/user/user_secret.yaml 
+kubectl delete -f kubesetup/replica-set-tls.yaml 
+kubectl delete -f kubesetup/configmap-opsmanager-demo.yaml 

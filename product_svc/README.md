@@ -29,17 +29,19 @@ $unzip consumer-reviews-of-amazon-products.zip
 $kubectl run -it mongo:rc :wq
 
 $kubectl run -it mongo:rc mongoimport --host <HOST> -d products -c reviews
-```bash
-$git clone https://github.com/jasonmimick/products-service
-$cd products-service
-$kubectl create secret PRODUCTS_SERVICE_MONGODB_URI "mongodb+srv://products-db-src.cluster.local"
 
-$kubectl create secret generic product-service-import-host --from-literal="MONGODB_URI=mongodb+srv://product-service-mdb.cluster.local"
-$kubectl apply -f kubernetes/products-service.yaml
+```bash
+$git clone https://github.com/tehburi/products-service
+$cd products-service
+Create Secrete 
+$kubectl apply -f user/user_secrete.yaml
+
+Create Product Service Deployment
+$kubectl apply -f products-service.yaml
 
 Kuberenetes x509 CSR  https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
 
-Get User name from x509
+Get User name from x509 <rfc2253-subject>
 openssl x509 -noout -subject -in <file.pem>
 
 Create file with base64 encoded secrete 

@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: configmap-opsmanager-demo
 data:
-  projectName: DemoProject
+  projectName: DemoProjectA
   orgId: 5d298c35c56c98d5cc3cd303
   baseUrl: https://cloud.mongodb.com
 
