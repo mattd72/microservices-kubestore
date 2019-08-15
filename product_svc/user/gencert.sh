@@ -2,9 +2,9 @@
 
 
 NAMESPACE="mongodb"
-MDB="product-service-mdb"
+MDB="product-service-2-mdb"
 
-
+# rfc2253-subject
 
 generate_cert_for_client () {
     client="${1}"
@@ -52,8 +52,9 @@ EOF
 
 
     kubectl describe "csr/${client}.${NAMESPACE}"
+    sleep 5
     kubectl certificate approve ${client}.${NAMESPACE}
-
+    sleep 5
     kubectl get csr/${client}.${NAMESPACE} -o jsonpath='{.status.certificate}' \
         | base64 --decode > ${client}.crt
 

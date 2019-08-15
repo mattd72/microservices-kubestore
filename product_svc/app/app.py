@@ -43,7 +43,8 @@ except Exception as err:
 dburi = os.environ.get('MONGODB_URI')
 logger.debug( f'Read environment MONGODB_URI: {dburi}' )
 # mongo = MongoClient('mongodb+srv://product-service-2-mdb-svc.mongodb.svc.cluster.local/products',
-mongo = MongoClient('product-service-2-mdb-0.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017,product-service-2-mdb-1.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017,product-service-2-mdb-2.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017',
+# mongo = MongoClient('product-service-2-mdb-0.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017,product-service-2-mdb-1.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017,product-service-2-mdb-2.product-service-2-mdb-svc.mongodb.svc.cluster.local:27017',
+mongo = MongoClient( dburi,
                      authMechanism="MONGODB-X509",
                      ssl=True,
                      replicaSet='product-service-2-mdb',

@@ -5,7 +5,7 @@ metadata:
   name: configmap-opsmanager
 data:
   projectName: KubeStoreDemo
-  orgId: 5d298c35c56c98d5cc3cd303
+  orgId: 5b30f7d7d383ad6499f230b1
   baseUrl: https://cloud.mongodb.com
 
   authenticationMode: x509

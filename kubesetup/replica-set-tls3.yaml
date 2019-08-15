@@ -6,17 +6,14 @@ metadata:
 spec:
   type: ReplicaSet
 
-  members: 3
+  members: 5
   version: 4.0.10
 
   project: configmap-opsmanager-demo
   credentials: secret-opsmanager-credentials
-  exposedExternally: true
+
   podSpec:
     memory: 512M
-    persistence:
-      single:
-        storage: 2G
 
   # look into `replica-set-persistent-volumes.yaml` for an example on how to use
   # Kubernetes Persistent Volumes in your MDB deployment.
@@ -26,6 +23,7 @@ spec:
   security:
     tls:
       enabled: true
-    
+
+    clusterAuthenticationMode: x509
 
 

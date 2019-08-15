@@ -1,0 +1,8 @@
+kubectl delete -f kubesetup/replica-set-tls.yaml 
+sleep 120
+kubectl apply -f kubesetup/replica-set-tls2.yaml 
+sleep 180
+kubectl apply -f kubesetup/replica-set-tls3.yaml 
+sleep 60
+kubectl certificate approve $(kubectl get csr -o name)
+

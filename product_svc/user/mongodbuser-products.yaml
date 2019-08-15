@@ -9,8 +9,4 @@ spec:
   db: "$external"
   roles:
     - db: admin
-      name: readWriteAnyDatabase
-    - db: admin
-      name: clusterAdmin
-    - db: admin
-      name: dbAdminAnyDatabase
+      name: readAnyDatabase

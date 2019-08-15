@@ -25,29 +25,39 @@ production systems.
 ## Getting started
 
 ```bash
-$unzip consumer-reviews-of-amazon-products.zip
+$unzip product-reviews-kube.zip
 $kubectl run -it mongo:rc :wq
 
 $kubectl run -it mongo:rc mongoimport --host <HOST> -d products -c reviews
 
 ```bash
-$git clone https://github.com/tehburi/products-service
 $cd products-service
-Create Secrete 
-$kubectl apply -f user/user_secrete.yaml
 
-Create Product Service Deployment
+# Generate Certificate 
+# Kuberenetes x509 CSR  https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
+$bash ./user/gencert.sh
+
+# Create file with base64 encoded secrete 
+$cat user/product-service-user-full.pem  | base64 | pbcopy
+
+# paste cert into user/user_secret.yaml
+# Create Secret
+$kubectl apply -f user/user_secret.yaml
+
+# Create MongoDB User
+$kubectl apply -f user/mongodbuser-products.yml
+
+# Create Product Service Deployment
 $kubectl apply -f products-service.yaml
 
-Kuberenetes x509 CSR  https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/
 
-Get User name from x509 <rfc2253-subject>
+
+# Get User name from x509 <rfc2253-subject>
 openssl x509 -noout -subject -in <file.pem>
 
-Create file with base64 encoded secrete 
-$cat user/product-service-user-full.pem  | base64 | pbcopy
 
 Add uri mongodb+srv://product-service-2-mdb-svc.mongodb.svc.cluster.local
 
-
+# List nodes and pods running in each pod 
+$kubectl get pod -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName
 
