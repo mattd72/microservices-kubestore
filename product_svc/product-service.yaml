@@ -16,7 +16,7 @@ spec:
     spec:     # pod spec               
       containers: 
       - name: product-svc
-        image: theburi/product-service # image we pushed
+        image: quay.io/ansulliv/product_svc:0.1 # image Andrew placed on quay.io
         ports:
         - containerPort: 5274
         env:
